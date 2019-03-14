@@ -1,6 +1,7 @@
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 
@@ -15,7 +16,7 @@ class BlockingBuffer implements Buffer {
 	public void blockingPut(int value) throws InterruptedException {
 		// TODO Auto-generated method stub
 		buffer.put(value);
-		System.out.printf("%s%2d\t%s%d%n", "Producer wirtes", value, 
+		System.out.printf("%s%2d\t%s%d%n", "Producer writes ", value, 
 				"Buffer cells occupied: ", buffer.size());
 	}
 
@@ -35,6 +36,12 @@ public class BlockingBufferTest{
 		
 		ExecutorService es = Executors.newCachedThreadPool();
 		Buffer sharedLocation = new BlockingBuffer();
+		
+		es.execute(new Producer(sharedLocation));
+		es.execute(new Consumer(sharedLocation));
+		
+		es.shutdown();
+		es.awaitTermination(1, TimeUnit.MINUTES);
 		
 	}
 }
