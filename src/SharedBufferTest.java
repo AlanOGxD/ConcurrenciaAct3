@@ -28,7 +28,7 @@ class Producer implements Runnable{
 				Thread.sleep(generator.nextInt(3000));
 				sharedLocation.blockingPut(i);
 				sum+= 1;
-				System.out.printf("\t%2d%n", sum);
+				//System.out.printf("\t%2d%n", sum);
 			} catch (Exception e) {
 				// TODO: handle exception
 				Thread.currentThread().interrupt();
@@ -57,7 +57,7 @@ class Consumer implements Runnable{
 			try {
 				Thread.sleep(generator.nextInt(3000));
 				sum+=sharedLocation.blockingGet();
-				System.out.printf("\t\t\t%2d%n", sum);
+				//System.out.printf("\t\t\t%2d%n", sum);
 			} catch (Exception e) {
 				// TODO: handle exception
 				Thread.currentThread().interrupt();
